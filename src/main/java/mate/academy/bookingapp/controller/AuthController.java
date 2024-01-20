@@ -8,7 +8,7 @@ import mate.academy.bookingapp.dto.user.UserLoginResponseDto;
 import mate.academy.bookingapp.dto.user.UserRegistrationRequestDto;
 import mate.academy.bookingapp.dto.user.UserRegistrationResponseDto;
 import mate.academy.bookingapp.security.AuthenticationService;
-import mate.academy.bookingapp.service.UserService;
+import mate.academy.bookingapp.service.user.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
