@@ -11,11 +11,10 @@ databaseChangeLog:
                   type: bigint
                   autoIncrement: true
                   constraints:
-                    nullable: false
                     primaryKey: true
               - column:
                   name: status
-                  type: varchar (255)
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
@@ -23,19 +22,21 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
+                    foreignKeyName: payment_booking_fk
+                    references: bookings(id)
               - column:
                   name: session_url
-                  type: varchar (255)
+                  type: text
                   constraints:
                     nullable: false
               - column:
                   name: session_id
-                  type: varchar (255)
+                  type: varchar(255)
                   constraints:
                     nullable: false
               - column:
                   name: amount_to_pay
-                  type: decimal
+                  type: decimal(10, 2)
                   constraints:
                     nullable: false
               - column:

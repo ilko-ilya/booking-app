@@ -7,6 +7,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import java.math.BigDecimal;
@@ -33,7 +34,7 @@ public class Payment {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private Status status;
-    @Column(name = "booking_id", nullable = false)
+    @JoinColumn(name = "booking_id", nullable = false)
     private Long bookingId;
     @Column(name = "session_url", nullable = false)
     private URL sessionUrl;
@@ -46,6 +47,6 @@ public class Payment {
     private boolean isDeleted = false;
 
     public enum Status {
-        PENDING,PAID
+        PENDING, PAID, CANCELED, FAILED
     }
 }

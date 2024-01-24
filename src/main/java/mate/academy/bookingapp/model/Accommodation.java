@@ -38,7 +38,7 @@ public class Accommodation {
     @Enumerated(EnumType.STRING)
     @Column(unique = true, name = "type", nullable = false, columnDefinition = "varchar (255)")
     private Type type;
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "location_id")
     private Address location;
     @Column(nullable = false, name = "size")
