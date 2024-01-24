@@ -5,10 +5,16 @@ import mate.academy.bookingapp.dto.booking.BookingDto;
 import mate.academy.bookingapp.dto.booking.BookingRequestDto;
 import mate.academy.bookingapp.model.Booking;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(config = MapperConfig.class)
 public interface BookingMapper {
+    @Mapping(source = "booking.id", target = "id")
     BookingDto toDto(Booking booking);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "accommodation.id", source = "accommodationId")
+    @Mapping(target = "deleted", ignore = true)
     Booking toModel(BookingRequestDto requestDto);
 }

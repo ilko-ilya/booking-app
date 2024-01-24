@@ -1,7 +1,6 @@
 package mate.academy.bookingapp.dto.user;
 
 import lombok.Data;
-import mate.academy.bookingapp.model.User;
 
 @Data
 public class UserProfileUpdateDto {
@@ -10,5 +9,5 @@ public class UserProfileUpdateDto {
     private String email;
     private String password;
     private String confirmPassword;
-    private User.Role role;
+    private String role;
 }

@@ -104,7 +104,7 @@ public class AccommodationServiceImpl implements AccommodationService {
             existingAccommodation.setSize(updateDto.getSize());
         }
         if (Objects.nonNull(updateDto.getType())) {
-            existingAccommodation.setType(updateDto.getType());
+            existingAccommodation.setType(Accommodation.Type.valueOf(updateDto.getType()));
         }
         if (Objects.nonNull(updateDto.getAmenities())) {
             existingAccommodation.setAmenities(updateDto.getAmenities());

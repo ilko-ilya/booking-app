@@ -70,7 +70,7 @@ public class UserServiceImpl implements UserService {
         }
 
         if (updateDto.getRole() != null) {
-            userFromDb.setRole(updateDto.getRole());
+            userFromDb.setRole(User.Role.valueOf(updateDto.getRole()));
         }
 
         User updatedUser = userRepository.save(userFromDb);
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
     public UserDto updateRoleById(Long userId, UserRoleUpdateDto roleUpdateDto) {
         User userFromDb = userRepository.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException("Can't find user by userId: " + userId));
-        userFromDb.setRole(roleUpdateDto.getRole());
+        userFromDb.setRole(User.Role.valueOf(roleUpdateDto.getRole()));
         User savedUser = userRepository.save(userFromDb);
         return userMapper.toDtoFromModel(savedUser);
     }

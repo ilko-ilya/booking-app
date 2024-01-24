@@ -6,13 +6,12 @@ import java.util.List;
 import lombok.Data;
 import lombok.NonNull;
 import mate.academy.bookingapp.dto.address.AddressRequestDto;
-import mate.academy.bookingapp.model.Accommodation;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class AccommodationRequestDto {
     @NonNull
-    private Accommodation.Type type;
+    private String type;
     @NonNull
     private String size;
     private List<String> amenities;
