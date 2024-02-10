@@ -19,6 +19,10 @@
         <maven.checkstyle.plugin.configLocation>checkstyle.xml</maven.checkstyle.plugin.configLocation>
         <lombok.mapstruct.binding.version>0.2.0</lombok.mapstruct.binding.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <telegram.version>6.4.0</telegram.version>
+        <stripe.version>22.13.0</stripe.version>
+        <hibernate.core.version>6.2.7.Final</hibernate.core.version>
+        <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <jjwt.version>0.11.5</jjwt.version>
         <testcontainers.version>1.19.3</testcontainers.version>
     </properties>
@@ -57,21 +61,32 @@
         <dependency>
             <groupId>com.stripe</groupId>
             <artifactId>stripe-java</artifactId>
-            <version>22.13.0</version>
+            <version>${stripe.version}</version>
         </dependency>
 
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-            <version>4.0.1</version>
+            <version>${javax.servlet-api.version}</version>
             <scope>provided</scope>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.telegram</groupId>-->
-<!--            <artifactId>telegrambots-spring-boot-starter</artifactId>-->
-<!--            <version>6.8.0</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots-spring-boot-starter</artifactId>
+            <version>${telegram.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>6.4.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambotsextensions</artifactId>
+            <version>6.7.0</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -101,7 +116,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>6.2.7.Final</version>
+            <version>${hibernate.core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
