@@ -24,4 +24,6 @@ public interface BookingService {
     BookingDto getBookingById(Long id);
 
     void deleteBookingById(Long id);
+
+    void checkAndProcessExpiredBookings();
 }

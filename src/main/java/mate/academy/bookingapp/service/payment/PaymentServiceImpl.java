@@ -5,12 +5,15 @@ import lombok.RequiredArgsConstructor;
 import mate.academy.bookingapp.dto.payment.CancelledPaymentResponseDto;
 import mate.academy.bookingapp.dto.payment.CreatePaymentRequestDto;
 import mate.academy.bookingapp.dto.payment.PaymentDto;
+import mate.academy.bookingapp.dto.payment.PaymentSessionDto;
 import mate.academy.bookingapp.dto.payment.SuccessfulPaymentResponseDto;
 import mate.academy.bookingapp.exception.EntityNotFoundException;
 import mate.academy.bookingapp.mapper.payment.PaymentMapper;
+import mate.academy.bookingapp.model.Booking;
 import mate.academy.bookingapp.model.Payment;
+import mate.academy.bookingapp.repository.BookingRepository;
 import mate.academy.bookingapp.repository.PaymentRepository;
-import mate.academy.bookingapp.service.stripe.StripePaymentService;
+import mate.academy.bookingapp.service.stripe.StripePaymentServiceImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +23,11 @@ public class PaymentServiceImpl implements PaymentService {
     public static final String PAID = "PAID";
     public static final String CANCELED = "CANCELED";
 
-    private final StripePaymentService stripePaymentService;
+    private final BookingRepository bookingRepository;
+    private final StripePaymentServiceImpl stripePaymentServiceImpl;
     private final PaymentMapper paymentMapper;
     private final PaymentRepository paymentRepository;
+    private final PaymentProcessor paymentProcessor;
 
     @Override
     public List<PaymentDto> getPaymentsForUser(Long userId, Pageable pageable) {
@@ -33,43 +38,37 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public String initiatePaymentSession(CreatePaymentRequestDto createPaymentRequestDto) {
-        return stripePaymentService.createPaymentSession(
-                createPaymentRequestDto.getSuccessUrl(),
-                createPaymentRequestDto.getCancelUrl(),
-                createPaymentRequestDto.getAmountToPay(),
-                createPaymentRequestDto.getCurrency()
-        );
+    public String initiatePaymentSession(CreatePaymentRequestDto requestDto) {
+        Booking booking = getBookingByBookingId(requestDto.getBookingId());
+
+        PaymentSessionDto paymentSession =
+                stripePaymentServiceImpl.createPaymentSession(booking.getId());
+
+        Payment payment = new Payment();
+        payment.setBookingId(booking.getId());
+        payment.setSessionId(paymentSession.getSessionId());
+        payment.setAmountToPay(stripePaymentServiceImpl.calculateTotalBookingAmount(
+                booking.getId()));
+        payment.setStatus(Payment.Status.PENDING);
+
+        paymentRepository.save(payment);
+        return paymentSession.getSessionId();
     }
 
     @Override
     public SuccessfulPaymentResponseDto handleSuccessfulPayment(String paymentId) {
-        Payment payment = paymentRepository.findPaymentById(Long.parseLong(paymentId)).orElseThrow(
-                () -> new EntityNotFoundException(
-                        "Can't find the payment by paymentId: " + paymentId));
-
-        payment.setStatus(Payment.Status.PAID);
-        paymentRepository.save(payment);
-
-        SuccessfulPaymentResponseDto responseDto = new SuccessfulPaymentResponseDto();
-        responseDto.setStatus(PaymentServiceImpl.PAID);
-        responseDto.setPaymentId(paymentId);
-        responseDto.setSessionUrl(payment.getSessionUrl().toString());
-        return responseDto;
+        return paymentProcessor.processSuccessfulPayment(paymentId);
     }
 
     @Override
     public CancelledPaymentResponseDto handleCancelledPayment(String paymentId) {
-        Payment payment = paymentRepository.findPaymentById(Long.parseLong(paymentId)).orElseThrow(
+        return paymentProcessor.processCancelledPayment(paymentId);
+    }
+
+    private Booking getBookingByBookingId(Long bookingId) {
+        return bookingRepository.findById(bookingId).orElseThrow(
                 () -> new EntityNotFoundException(
-                        "Can't find the payment by paymentId: " + paymentId));
-
-        payment.setStatus(Payment.Status.CANCELED);
-        paymentRepository.save(payment);
-
-        CancelledPaymentResponseDto responseDto = new CancelledPaymentResponseDto();
-        responseDto.setStatus(PaymentServiceImpl.CANCELED);
-        responseDto.setPaymentId(paymentId);
-        return responseDto;
+                        "Can't find a booking by bookingID: " + bookingId));
     }
 }
+

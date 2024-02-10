@@ -14,6 +14,7 @@ import mate.academy.bookingapp.model.Accommodation;
 import mate.academy.bookingapp.model.Address;
 import mate.academy.bookingapp.repository.AccommodationRepository;
 import mate.academy.bookingapp.repository.AddressRepository;
+import mate.academy.bookingapp.service.telegram.TelegramNotificationService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -24,14 +25,19 @@ public class AccommodationServiceImpl implements AccommodationService {
     private final AccommodationMapper accommodationMapper;
     private final AddressRepository addressRepository;
     private final AddressMapper addressMapper;
+    private final TelegramNotificationService telegramNotificationService;
 
     @Override
     public AccommodationDto create(AccommodationRequestDto requestDto) {
         Accommodation accommodation = accommodationMapper.toModel(requestDto);
-        Address address = addressRepository.save(addressMapper
-                .toModel(requestDto.getLocation()));
+        Address address = addressRepository.save(addressMapper.toModel(requestDto.getLocation()));
         accommodation.setLocation(address);
-        return accommodationMapper.toDto(accommodationRepository.save(accommodation));
+
+        Accommodation savedAccommodation = accommodationRepository.save(accommodation);
+
+        telegramNotificationService.notifyNewAccommodationCreated(
+                accommodationMapper.toDto(savedAccommodation));
+        return accommodationMapper.toDto(savedAccommodation);
     }
 
     @Override
@@ -65,7 +71,9 @@ public class AccommodationServiceImpl implements AccommodationService {
 
     @Override
     public void deleteById(Long id) {
+        AccommodationDto deletedAccommodation = getById(id);
         accommodationRepository.deleteById(id);
+        telegramNotificationService.notifyAccommodationReleased(deletedAccommodation);
     }
 
     private Address updateAddress(Long id, AccommodationUpdateDto updateDto) {
