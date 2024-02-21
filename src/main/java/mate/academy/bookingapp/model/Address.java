@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,6 +35,9 @@ public class Address {
     private Integer zipCode;
     @Column(nullable = false, name = "is_deleted")
     private boolean isDeleted = false;
-    @OneToOne(mappedBy = "location")
-    private Accommodation accommodation;
+
+    public Address(Long id) {
+        this.id = id;
+    }
 }
+

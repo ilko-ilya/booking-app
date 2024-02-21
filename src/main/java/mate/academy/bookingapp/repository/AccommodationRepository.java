@@ -1,5 +1,6 @@
 package mate.academy.bookingapp.repository;
 
+import java.util.Optional;
 import lombok.NonNull;
 import mate.academy.bookingapp.model.Accommodation;
 import org.springframework.data.domain.Page;
@@ -11,4 +12,8 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
     @EntityGraph(attributePaths = {"location", "amenities"})
     @NonNull
     Page<Accommodation> findAll(@NonNull Pageable pageable);
+
+    @EntityGraph(attributePaths = {"location", "amenities"})
+    @NonNull
+    Optional<Accommodation> findById(@NonNull Long id);
 }
