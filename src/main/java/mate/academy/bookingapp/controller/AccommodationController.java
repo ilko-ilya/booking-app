@@ -58,7 +58,7 @@ public class AccommodationController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable Long id) {
-        accommodationService.getById(id);
+        accommodationService.deleteById(id);
     }
 
     @Operation(summary = "Update an accommodation by id",

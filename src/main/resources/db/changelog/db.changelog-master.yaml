@@ -13,8 +13,10 @@ databaseChangeLog:
       file: db/changelog/changes/06-create-accommodations-amenities-table.yaml
   - include:
       file: db/changelog/changes/07-create-telegram-chats-table.yaml
-
-
+  - include:
+      file: db/changelog/changes/08-fill-addresses-table-with-addresses.yaml
+  - include:
+      file: db/changelog/changes/09-fill-accommodations-table-with-data.yaml
 
 
 

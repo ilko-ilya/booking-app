@@ -21,4 +21,8 @@ public class AccommodationRequestDto {
     private Integer availability;
     @NonNull
     private AddressRequestDto location;
+
+    public AccommodationRequestDto() {
+
+    }
 }

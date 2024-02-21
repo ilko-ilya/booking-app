@@ -7,6 +7,7 @@ import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,9 +18,10 @@ import jakarta.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.util.List;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -27,9 +29,9 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE accommodations SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
-@Data
+@Getter
+@Setter
 @Entity
-@Accessors(chain = true)
 @Table(name = "accommodations")
 public class Accommodation {
     @Id
@@ -38,14 +40,15 @@ public class Accommodation {
     @Enumerated(EnumType.STRING)
     @Column(unique = true, name = "type", nullable = false, columnDefinition = "varchar (255)")
     private Type type;
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
+    @ToString.Exclude
     private Address location;
     @Column(nullable = false, name = "size")
     private String size;
     @ElementCollection
     @CollectionTable(name = "accommodations_amenities",
-            joinColumns = @JoinColumn(name = "accommodation_id"))
+            joinColumns = @JoinColumn(name = "accommodation_id", referencedColumnName = "id"))
     @Column(nullable = false)
     private List<String> amenities;
     @Column(nullable = false, name = "daily_rate")
@@ -55,6 +58,20 @@ public class Accommodation {
     private Integer availability;
     @Column(nullable = false, name = "is_deleted")
     private boolean isDeleted = false;
+
+    @Override
+    public String toString() {
+        return "Accommodation{"
+                + "id=" + id
+                + ", type=" + type
+                + ", location=" + location
+                + ", size='" + size + '\''
+                + ", amenities=" + amenities
+                + ", dailyRate=" + dailyRate
+                + ", availability=" + availability
+                + ", isDeleted=" + isDeleted
+                + '}';
+    }
 
     public enum Type {
         HOUSE, APARTMENT, CONDO, VACATION_HOME

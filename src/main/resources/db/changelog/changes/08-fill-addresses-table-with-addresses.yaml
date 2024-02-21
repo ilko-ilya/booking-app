@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: fill-addresses-table-with-addresses
+      author: IlyaSamilyak
+      changes:
+        - insert:
+            tableName: addresses
+            columns:
+              - column: { name: "country", value: "Ukraine" }
+              - column: { name: "city", value: "Kiev" }
+              - column: { name: "street", value: "Kievskaya" }
+              - column: { name: "address_line", value: "4455" }
+              - column: { name: "zip_code", value: "11" }
+              - column: { name: "is_deleted", value: "0" }
+        - insert:
+            tableName: addresses
+            columns:
+              - column: { name: "country", value: "Germany"}
+              - column: { name: "city", value: "Hamburg" }
+              - column: { name: "street", value: "Some Street" }
+              - column: { name: "address_line", value: "1122" }
+              - column: { name: "zip_code", value: "12" }
+              - column: { name: "is_deleted", value: "0" }
+        - insert:
+            tableName: addresses
+            columns:
+              - column: { name: "country", value: "Italy" }
+              - column: { name: "city", value: "Milan" }
+              - column: { name: "street", value: "Some Italy Street" }
+              - column: { name: "address_line", value: "2233" }
+              - column: { name: "zip_code", value: "14" }
+              - column: { name: "is_deleted", value: "0" }

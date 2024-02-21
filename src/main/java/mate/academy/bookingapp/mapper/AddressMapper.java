@@ -10,6 +10,7 @@ import org.mapstruct.Mapping;
 public interface AddressMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "deleted", ignore = true)
-    @Mapping(target = "accommodation", ignore = true)
     Address toModel(AddressRequestDto requestDto);
+
 }
+

@@ -1,0 +1,48 @@
+databaseChangeLog:
+  - changeSet:
+      id: fill-accommodation-table-with-data
+      author: IlyaSamilyak
+      changes:
+        - insert:
+            tableName: accommodations
+            columns:
+              - column: { name: "type", value: "HOUSE" }
+              - column: { name: "location_id", value: "1" }
+              - column: { name: "size", value: "150" }
+              - column: { name: "daily_rate", value: "200" }
+              - column: { name: "availability", value: "8" }
+              - column: { name: "is_deleted", value: "0" }
+        - insert:
+            tableName: accommodations
+            columns:
+              - column: { name: "type", value: "APARTMENT" }
+              - column: { name: "location_id", value: "2" }
+              - column: { name: "size", value: "100" }
+              - column: { name: "daily_rate", value: "150" }
+              - column: { name: "availability", value: "5" }
+              - column: { name: "is_deleted", value: "0" }
+        - insert:
+            tableName: accommodations
+            columns:
+              - column: { name: "type", value: "CONDO" }
+              - column: { name: "location_id", value: "3" }
+              - column: { name: "size", value: "120" }
+              - column: { name: "daily_rate", value: "180" }
+              - column: { name: "availability", value: "6" }
+              - column: { name: "is_deleted", value: "0" }
+
+        - insert:
+            tableName: accommodations_amenities
+            columns:
+              - column: { name: "accommodation_id", value: "1" }
+              - column: { name: "amenities", value: "Wi-Fi, Parking, TV" }
+        - insert:
+            tableName: accommodations_amenities
+            columns:
+              - column: { name: "accommodation_id", value: "2" }
+              - column: { name: "amenities", value: "Air Conditioning, Pool, Kitchen" }
+        - insert:
+            tableName: accommodations_amenities
+            columns:
+              - column: { name: "accommodation_id", value: "3" }
+              - column: { name: "amenities", value: "Garden, Pet Friendly, Gym" }
