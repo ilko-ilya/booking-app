@@ -24,23 +24,15 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public void deleteById(Long id) {
-        try {
-            addressRepository.deleteById(id);
-            logger.info("Address with ID {} deleted successfully.", id);
-        } catch (Exception e) {
-            logger.error("Error deleting address with ID {}: {}", id, e.getMessage());
-            throw e;
-        }
+        addressRepository.deleteById(id);
+        logger.info("Address with ID {} deleted successfully.", id);
     }
 
     @Override
     public Address save(AddressRequestDto requestDto) {
-        try {
-            Address address = addressMapper.toModel(requestDto);
-            return addressRepository.save(address);
-        } catch (Exception e) {
-            logger.error("Error saving address: {}", e.getMessage());
-            throw e;
-        }
+        Address address = addressMapper.toModel(requestDto);
+        Address savedAddress = addressRepository.save(address);
+        logger.info("Address saved successfully. ID: {}", savedAddress.getId());
+        return savedAddress;
     }
 }
