@@ -298,7 +298,7 @@ public class AccommodationServiceImplTest {
 
         assertThrows(EntityNotFoundException.class,
                 () -> accommodationService.update(nonExistingId, updateDto),
-                "Expected EntityNotFoundException when updating non-existing accommodation");
+                "Can't find accommodation by id: ");
 
     }
 }
