@@ -15,6 +15,7 @@ import mate.academy.bookingapp.model.User;
 import mate.academy.bookingapp.repository.AccommodationRepository;
 import mate.academy.bookingapp.repository.BookingRepository;
 import mate.academy.bookingapp.service.telegram.TelegramNotificationService;
+import mate.academy.bookingapp.service.user.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,7 @@ public class BookingServiceImpl implements BookingService {
 
     private final BookingRepository bookingRepository;
     private final BookingMapper bookingMapper;
+    private final UserService userService;
     private final AccommodationRepository accommodationRepository;
     private final TelegramNotificationService telegramNotificationService;
 
@@ -60,10 +62,14 @@ public class BookingServiceImpl implements BookingService {
             Booking.Status status,
             Pageable pageable
     ) {
-        return bookingRepository.findBookingsByUserIdAndStatus(userId, status, pageable)
-                .stream()
-                .map(bookingMapper::toDto)
-                .toList();
+        if (userService.existsById(userId)) {
+            return bookingRepository.findBookingsByUserIdAndStatus(userId, status, pageable)
+                    .stream()
+                    .map(bookingMapper::toDto)
+                    .toList();
+        } else {
+            throw new EntityNotFoundException("Can't find user by userId: " + userId);
+        }
     }
 
     @Override
@@ -129,7 +135,7 @@ public class BookingServiceImpl implements BookingService {
     private Accommodation getAccommodationByAccommodationId(Long id) {
         return accommodationRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(
-                        "Can't fina an accommodation by accommodationID: " + id));
+                        "Can't find an accommodation by accommodationID: " + id));
     }
 
     private Booking getBookingByBookingId(Long id) {

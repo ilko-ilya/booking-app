@@ -15,6 +15,8 @@ public interface UserService {
     UserDto updateCurrentUserProfile(Authentication authentication, UserProfileUpdateDto updateDto);
 
     UserDto updateRoleById(Long userId, UserRoleUpdateDto roleUpdateDto);
+
+    boolean existsById(Long userId);
 }
 
 

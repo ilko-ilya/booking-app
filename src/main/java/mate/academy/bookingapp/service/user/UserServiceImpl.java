@@ -86,6 +86,11 @@ public class UserServiceImpl implements UserService {
         return userMapper.toDtoFromModel(savedUser);
     }
 
+    @Override
+    public boolean existsById(Long userId) {
+        return userRepository.existsById(userId);
+    }
+
     private User getUser(Authentication authentication) {
         String email = authentication.getName();
         return userRepository.findByEmail(email).orElseThrow(
