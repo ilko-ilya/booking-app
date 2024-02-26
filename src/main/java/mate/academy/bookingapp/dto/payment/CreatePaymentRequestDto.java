@@ -7,4 +7,8 @@ import lombok.Data;
 public class CreatePaymentRequestDto {
     @NotNull(message = "Booking ID can't be null")
     private Long bookingId;
+
+    public CreatePaymentRequestDto(Long bookingId) {
+        this.bookingId = bookingId;
+    }
 }
