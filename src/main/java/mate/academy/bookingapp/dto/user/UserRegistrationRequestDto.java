@@ -19,4 +19,18 @@ public class UserRegistrationRequestDto {
     private String firstName;
     @NotBlank
     private String lastName;
+
+    public UserRegistrationRequestDto(
+            String email,
+            String password,
+            String repeatPassword,
+            String firstName,
+            String lastName
+    ) {
+        this.email = email;
+        this.password = password;
+        this.repeatPassword = repeatPassword;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }
