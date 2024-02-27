@@ -69,10 +69,6 @@ public class UserServiceImpl implements UserService {
             userFromDb.setPassword(passwordEncoder.encode(updateDto.getPassword()));
         }
 
-        if (updateDto.getRole() != null) {
-            userFromDb.setRole(User.Role.valueOf(updateDto.getRole()));
-        }
-
         User updatedUser = userRepository.save(userFromDb);
         return userMapper.toDtoFromModel(updatedUser);
     }
