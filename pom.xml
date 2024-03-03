@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.0</version>
+        <version>3.2.2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>mate.academy</groupId>
@@ -24,7 +24,7 @@
         <hibernate.core.version>6.2.7.Final</hibernate.core.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <jjwt.version>0.11.5</jjwt.version>
-        <testcontainers.version>1.19.3</testcontainers.version>
+        <testcontainers.version>1.18.0</testcontainers.version>
     </properties>
     <dependencies>
         <dependency>
@@ -79,7 +79,7 @@
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>
-            <version>6.4.0</version>
+            <version>6.8.0</version>
         </dependency>
 
         <dependency>
@@ -170,17 +170,17 @@
             <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>mysql</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>8.2.0</version>
             <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testcontainers</groupId>
-            <artifactId>mysql</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>

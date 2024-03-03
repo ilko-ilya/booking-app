@@ -9,11 +9,11 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
-    @EntityGraph(attributePaths = {"location", "amenities"})
+    @EntityGraph(attributePaths = {"location"})
     @NonNull
     Page<Accommodation> findAll(@NonNull Pageable pageable);
 
-    @EntityGraph(attributePaths = {"location", "amenities"})
+    @EntityGraph(attributePaths = {"location"})
     @NonNull
     Optional<Accommodation> findById(@NonNull Long id);
 }
