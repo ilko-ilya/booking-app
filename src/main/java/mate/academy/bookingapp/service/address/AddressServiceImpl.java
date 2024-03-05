@@ -20,6 +20,7 @@ public class AddressServiceImpl implements AddressService {
     public AddressServiceImpl(AddressRepository addressRepository, AddressMapper addressMapper) {
         this.addressRepository = addressRepository;
         this.addressMapper = addressMapper;
+        logger.info("AddressServiceImpl instantiated with AddressMapper: {}", addressMapper);
     }
 
     @Override

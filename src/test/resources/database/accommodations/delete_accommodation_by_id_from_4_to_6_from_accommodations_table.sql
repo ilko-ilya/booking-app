@@ -1,0 +1,1 @@
+delete from accommodations where id between 4 and 6;
