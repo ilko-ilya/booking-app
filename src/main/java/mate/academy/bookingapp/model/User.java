@@ -1,5 +1,6 @@
 package mate.academy.bookingapp.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -46,6 +47,7 @@ public class User implements UserDetails {
     @Column(nullable = false, name = "is_deleted")
     private boolean isDeleted = false;
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(role.name()));
