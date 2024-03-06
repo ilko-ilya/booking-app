@@ -34,6 +34,7 @@ public class BookingController {
 
     @Operation(summary = "Create a booking", description = "Create a new booking")
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('CUSTOMER')")
     @PostMapping
     public BookingDto create(@RequestBody @Valid BookingRequestDto requestDto) {
         return bookingService.createBooking(requestDto);
