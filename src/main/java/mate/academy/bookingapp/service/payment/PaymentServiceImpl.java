@@ -14,6 +14,7 @@ import mate.academy.bookingapp.model.Payment;
 import mate.academy.bookingapp.repository.BookingRepository;
 import mate.academy.bookingapp.repository.PaymentRepository;
 import mate.academy.bookingapp.service.stripe.StripePaymentServiceImpl;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +32,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public List<PaymentDto> getPaymentsForUser(Long userId, Pageable pageable) {
-        List<Payment> paymentsByUserId = paymentRepository.findPaymentsByUserId(userId);
-        return paymentsByUserId.stream()
+        Page<Payment> paymentsByUserId = paymentRepository.findPaymentsByUserId(userId, pageable);
+        return paymentsByUserId.getContent().stream()
                 .map(paymentMapper::toDto)
                 .toList();
     }

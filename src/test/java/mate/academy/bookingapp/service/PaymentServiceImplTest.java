@@ -3,6 +3,7 @@ package mate.academy.bookingapp.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,6 +37,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
@@ -82,66 +84,16 @@ public class PaymentServiceImplTest {
                         new URL("http://example.com/3"),
                         BigDecimal.valueOf(400));
 
-        User user = createUser(
-                userId,
-                "John",
-                "Doe",
-                "john.doe@example.com",
-                "password123"
-        );
-
-        Address addressOne = createAddress(
-                "Country",
-                "City",
-                "Street",
-                "Address line",
-                123
-        );
-
-        Accommodation accommodation
-                = createAccommodation(
-                1L,
-                List.of("TV", "Air conditioner"),
-                Accommodation.Type.APARTMENT,
-                addressOne,
-                5,
-                BigDecimal.valueOf(100),
-                "80");
-
-        Booking bookingOne = createBooking(
-                1L,
-                LocalDate.now(),
-                LocalDate.now().plusDays(3),
-                Booking.Status.PENDING,
-                user,
-                accommodation
-        );
-
-        Booking bookingTwo = createBooking(
-                2L,
-                LocalDate.now(),
-                LocalDate.now().plusDays(3),
-                Booking.Status.PENDING,
-                user,
-                accommodation
-        );
-
-        Booking bookingThree = createBooking(
-                3L,
-                LocalDate.now(),
-                LocalDate.now().plusDays(3),
-                Booking.Status.PENDING,
-                user,
-                accommodation
-        );
-
         final PaymentDto paymentDtoOne = createPaymentDto(paymentOne);
         final PaymentDto paymentDtoTwo = createPaymentDto(paymentTwo);
         final PaymentDto paymentDtoThree = createPaymentDto(paymentThree);
 
+        Pageable pageable = Pageable.unpaged();
+
         List<Payment> paymentList = List.of(paymentOne, paymentTwo, paymentThree);
 
-        when(paymentRepository.findPaymentsByUserId(userId)).thenReturn(paymentList);
+        when(paymentRepository.findPaymentsByUserId(eq(userId), any(Pageable.class)))
+                .thenReturn(new PageImpl<>(paymentList, pageable, paymentList.size()));
 
         for (Payment payment : paymentList) {
             when(paymentMapper.toDto(payment)).thenReturn(createPaymentDto(payment));
@@ -149,7 +101,7 @@ public class PaymentServiceImplTest {
 
         List<PaymentDto> actual = paymentService.getPaymentsForUser(userId, Pageable.unpaged());
 
-        verify(paymentRepository, times(1)).findPaymentsByUserId(userId);
+        verify(paymentRepository, times(1)).findPaymentsByUserId(userId, pageable);
 
         for (Payment payment : paymentList) {
             verify(paymentMapper, times(1)).toDto(payment);
