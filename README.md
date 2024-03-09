@@ -34,6 +34,34 @@ put the power in your hands. Our platform ensures that the rental process is tra
 EasyStay – where your housing search becomes easy, efficient, and enjoyable. Thank you for choosing us to simplify your
 rental journey! 🏡✨
 
+## Ok, let's get started
+### Follow these simple steps, and you'll know how to use this project:
+#### 1. Before we started you make sure that you have installed:
+- Java 17
+- Docker 
+
+#### 2. You have to clone repository
+
+  ``` 
+  https://github.com/ilko-ilya/booking-app
+  ``` 
+#### 3. Create Environment File in root directory
+
+  ``` 
+  .env
+  ``` 
+#### 4. Build and run Docker container
+  ``` 
+  docker-compose build
+  docker-compose up
+  ``` 
+   These commands will build and run Docker container for your application
+
+#### 5. Access the Application
+Once the container is running, you can access the EasyStay application in your web browser. By default, it should be available at http://localhost:8081.
+
+#### Now you're all set to explore the full functionality of EasyStay! Continue reading to discover the diverse features our application offers. If you have any questions or run into issues, feel free to ask. Happy booking! 🏡✨
+      
 ## Functionality
 
 ### For Non-Authenticated Users

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -88,13 +89,13 @@ public class AccommodationRepositoryTest {
         assertEquals(result.get().getType(), accommodation.getType());
         assertEquals(result.get().getLocation(), accommodation.getLocation());
         assertEquals(result.get().getDailyRate(), accommodation.getDailyRate());
-        assertEquals(result.get().getAmenities(), accommodation.getAmenities());
+        assertEquals(new ArrayList<>(result.get().getAmenities()), accommodation.getAmenities());
     }
 
     @NonNull
     private static Accommodation getAccommodation() {
         Address location = new Address();
-        location.setId(1L);
+        location.setId(4L);
         location.setCountry("Italy");
         location.setCity("Milan");
         location.setStreet("Taras Shevchenko");
@@ -102,7 +103,7 @@ public class AccommodationRepositoryTest {
         location.setZipCode(4400);
 
         Accommodation accommodation1 = new Accommodation();
-        accommodation1.setId(6L);
+        accommodation1.setId(1L);
         accommodation1.setType(Accommodation.Type.APARTMENT);
         accommodation1.setAmenities(Arrays.asList("TV", "Air-conditioner"));
         accommodation1.setDailyRate(BigDecimal.valueOf(100));
