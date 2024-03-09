@@ -13,8 +13,9 @@ import jakarta.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.net.URL;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -23,7 +24,8 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE payments SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
-@Data
+@Getter
+@Setter
 @Entity
 @Accessors(chain = true)
 @Table(name = "payments")

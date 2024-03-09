@@ -6,9 +6,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.util.Objects;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
@@ -16,7 +18,8 @@ import org.hibernate.annotations.Where;
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE addresses SET is_deleted = true WHERE id = ?")
 @Where(clause = "is_deleted = false")
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -38,6 +41,30 @@ public class Address {
 
     public Address(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Address address = (Address) o;
+        return isDeleted == address.isDeleted
+                && Objects.equals(id, address.id)
+                && Objects.equals(country, address.country)
+                && Objects.equals(city, address.city)
+                && Objects.equals(street, address.street)
+                && Objects.equals(addressLine, address.addressLine)
+                && Objects.equals(zipCode, address.zipCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, country, city, street, addressLine, zipCode, isDeleted);
     }
 }
 
